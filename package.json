@@ -1,0 +1,68 @@
+{
+  "name": "xlsx-write-stream",
+  "version": "0.0.2",
+  "description": "Apify xlsx write stream helper",
+  "main": "index.js",
+  "keywords": [
+    "apify",
+    "apifier",
+    "xslx",
+    "stream"
+  ],
+  "author": {
+    "name": "Apify",
+    "email": "support@apify.com",
+    "url": "https://www.apify.com"
+  },
+  "contributors": [
+    "Jaroslav Hejlek <jaroslav@apify.com>"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Apifier/xlsx-stream"
+  },
+  "bugs": {
+    "url": "https://github.com/Apifier/xlsx-stream"
+  },
+  "homepage": "https://github.com/Apifier/xlsx-stream",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start": "npm run build && node dist/index.js",
+    "build": "npm run clean && babel src --out-dir dist",
+    "build-doc": "npm run clean && npm run build && node ./node_modules/jsdoc/jsdoc.js --package ./package.json -c ./jsdoc/conf.json -d docs",
+    "test": "npm run build && mocha --compilers js:babel-core/register --recursive",
+    "test-cov": "npm run build && babel-node node_modules/isparta/bin/isparta cover --report html --report text node_modules/.bin/_mocha",
+    "prepare": "npm run build",
+    "clean": "rm -rf dist",
+    "lint": "eslint src test",
+    "unusedPrepublishOnly": "(test $RUNNING_FROM_SCRIPT || (echo \"You must use publish.sh instead of 'npm publish' directly!\"; exit 1)) && npm test && npm run lint"
+  },
+  "dependencies": {
+    "archiver": "^2.1.0",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "apify-jsdoc-template": "github:Apifier/apify-jsdoc-template",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-preset-node8": "^1.2.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "7.4.0",
+    "isparta": "^4.0.0",
+    "jsdoc": "^3.5.5",
+    "jsdoc-export-default-interop": "^0.3.1",
+    "mocha": "^4.0.1",
+    "sinon": "^4.0.1",
+    "sinon-stub-promise": "^4.0.0"
+  }
+}

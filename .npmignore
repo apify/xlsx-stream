@@ -1,0 +1,6 @@
+/test
+.editorconfig
+.babelrc
+.eslintignore
+.eslintrc
+testgenerator.js
