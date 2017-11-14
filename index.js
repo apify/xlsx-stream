@@ -1,1 +1,1 @@
-module.exports = require('./dist/XLSXWriter.js');
+module.exports = require('./dist/XLSXWriteStream.js');
