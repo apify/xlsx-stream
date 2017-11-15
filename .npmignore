@@ -4,3 +4,4 @@
 .eslintignore
 .eslintrc
 testgenerator.js
+yarn.lock
