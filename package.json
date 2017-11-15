@@ -1,6 +1,6 @@
 {
   "name": "xlsx-write-stream",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Apify xlsx write stream helper",
   "main": "dist/index.js",
   "keywords": [
