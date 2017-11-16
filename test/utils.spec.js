@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import {
     getCellId,
-    escape
+    escape,
 } from '../src/utils';
 
 describe('The getCellId function', () => {

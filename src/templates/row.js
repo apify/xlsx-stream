@@ -1,3 +1,4 @@
+/* eslint quotes: 0 */
 import cell from './cell';
 import { getCellId } from '../utils';
 
