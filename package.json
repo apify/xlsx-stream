@@ -1,6 +1,6 @@
 {
   "name": "xlsx-write-stream",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "Apify xlsx write stream helper",
   "main": "dist/index.js",
   "keywords": [
@@ -37,7 +37,7 @@
     "prepare": "npm run build",
     "clean": "rm -rf dist",
     "lint": "eslint src test",
-    "unusedPrepublishOnly": "(test $RUNNING_FROM_SCRIPT || (echo \"You must use publish.sh instead of 'npm publish' directly!\"; exit 1)) && npm test && npm run lint"
+    "prepublishOnly": "(test $RUNNING_FROM_SCRIPT || (echo \"You must use publish.sh instead of 'npm publish' directly!\"; exit 1)) && npm test && npm run lint"
   },
   "dependencies": {
     "archiver": "^2.1.0",
