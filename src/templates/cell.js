@@ -1,4 +1,4 @@
-import { isDate, isString } from 'lodash';
+import { isDate, isString, isNumber } from 'lodash';
 import { escape } from '../utils';
 
 export default function (value, cell) {
@@ -8,7 +8,7 @@ export default function (value, cell) {
         return `<c r="${cell}" t="n"><v>${officeTimestamp}</v></c>`;
     } else if (isString(value)) {
         return `<c r="${cell}" t="inlineStr"><is><t>${escape(value)}</t></is></c>`;
-    } else if (value) {
+    } else if (isNumber(value) || value) {
         return `<c r="${cell}" t="n"><v>${value}</v></c>`;
     }
     return '';
