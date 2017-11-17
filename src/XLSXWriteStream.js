@@ -50,8 +50,7 @@ export default class XLSXWriteStream {
         const transformedStream = stream.pipe(toXlsxRow);
         this.sheetStream = new PassThrough();
         this.sheetStream.write(templates.SheetHeader);
-        stream.on('end', this.finalize);
-        stream.on('close', () => console.log('Input stream close'));
+        transformedStream.on('end', this.finalize);
         // stream.on('data', () => console.log('Input stream data'));
         transformedStream.pipe(this.sheetStream);
         this.zip.append(this.sheetStream, {
@@ -66,7 +65,6 @@ export default class XLSXWriteStream {
      * Finalize the zip archive
      */
     finalize() {
-        console.log('finalize');
         this.sheetStream.end(templates.SheetFooter);
         return this.zip.finalize();
     }
