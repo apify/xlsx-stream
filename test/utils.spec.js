@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import {
     getCellId,
-    escape,
+    sanitize,
 } from '../src/utils';
 
 describe('The getCellId function', () => {
@@ -32,10 +32,16 @@ describe('The getCellId function', () => {
     });
 });
 
-describe('The escape function', () => {
+describe('The sanitize function', () => {
     it('escapes XML entities &, >, <', () => {
         const expectedResult = '&amp;&lt;&gt;';
-        const result = escape('&<>');
+        const result = sanitize('&<>');
+        expect(result).to.be.equal(expectedResult);
+    });
+
+    it('removes invalid XML characters', () => {
+        const expectedResult = '';
+        const result = sanitize('\u001A');
         expect(result).to.be.equal(expectedResult);
     });
 });
