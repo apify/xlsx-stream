@@ -64,3 +64,4 @@ typings/
 
 generated.xlsx
 .idea
+package-lock.json
