@@ -1,6 +1,6 @@
 {
   "name": "xlsx-write-stream",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "XLSX stream writer",
   "main": "dist/index.js",
   "keywords": [
