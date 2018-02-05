@@ -1,7 +1,7 @@
 {
   "name": "xlsx-write-stream",
-  "version": "0.0.15",
-  "description": "Apify xlsx write stream helper",
+  "version": "0.0.16",
+  "description": "XLSX stream writer",
   "main": "dist/index.js",
   "keywords": [
     "apify",
@@ -20,12 +20,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Apifier/xlsx-stream"
+    "url": "git+https://github.com/apifytech/xlsx-stream"
   },
   "bugs": {
-    "url": "https://github.com/Apifier/xlsx-stream"
+    "url": "https://github.com/apifytech/xlsx-stream"
   },
-  "homepage": "https://github.com/Apifier/xlsx-stream",
+  "homepage": "https://github.com/apifytech/xlsx-stream",
   "files": [
     "dist"
   ],
@@ -44,7 +44,7 @@
     "lodash": "^4.17.4"
   },
   "devDependencies": {
-    "apify-jsdoc-template": "github:Apifier/apify-jsdoc-template",
+    "apify-jsdoc-template": "github:apifytech/apify-jsdoc-template",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
