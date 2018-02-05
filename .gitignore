@@ -63,3 +63,5 @@ typings/
 .env
 
 generated.xlsx
+.idea
+package-lock.json
