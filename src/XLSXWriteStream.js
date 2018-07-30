@@ -70,7 +70,7 @@ export default class XLSXWriteStream extends events {
         }
 
         // check if correct stream type
-        if (!stream.pipe) {
+        if (stream && !stream.pipe) {
             return this.emit('error', new Error('stream must be readable or transform stream'));
         }
 
