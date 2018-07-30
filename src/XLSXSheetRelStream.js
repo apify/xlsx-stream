@@ -1,7 +1,9 @@
 import Through from 'through2';
 
 function formatSheetRelRow(index) {
-    return `    <Relationship Id="rId${index}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${index}.xml"/>
+    return `    <Relationship Id="rId${
+        index}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${
+        index}.xml"/>
     `;
 }
 

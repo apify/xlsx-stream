@@ -1,6 +1,6 @@
 import events from 'events';
 import Archiver from 'archiver';
-import { PassThrough, Stream } from 'stream';
+import { PassThrough } from 'stream';
 import * as templates from './templates';
 import XLSXRowTransform from './XLSXRowTransform';
 import creatSheetNameStream from './XLSXSheetNameStream';
@@ -12,8 +12,8 @@ export default class XLSXWriteStream extends events {
      * Create new Stream
      */
     constructor() {
-        super()
-        this.sheetCount = 0
+        super();
+        this.sheetCount = 0;
         this.sheetStreams = {};
         this.streams = {};
         this.streamDone = {};
@@ -40,11 +40,11 @@ export default class XLSXWriteStream extends events {
         this.sheetNameStream = creatSheetNameStream();
         this.sheetNameStream.write(templates.SheetNameHeader);
         this.zip.append(this.sheetNameStream, {
-            name: 'xl/workbook.xml'
-        })
+            name: 'xl/workbook.xml',
+        });
 
         this.sheetRelStream = createSheetRelStream();
-        this.sheetRelStream.write(templates.SheetRelHeader)
+        this.sheetRelStream.write(templates.SheetRelHeader);
         this.zip.append(this.sheetRelStream, {
             name: 'xl/_rels/workbook.xml.rels',
         });
@@ -58,21 +58,20 @@ export default class XLSXWriteStream extends events {
         });
     }
     /**
-     * 
      * @param {String} name sheet name
      * @param {Stream?} stream readable or transform stream or empty but data to stream is must be Array
      * @returns {Stream} stream returned is the stream that you can invoke stream.write([...])
      */
-    createSheetBook(name, stream){
+    createSheetBook(name, stream) {
         // handle params
         if (typeof name !== 'string') {
-            stream = name
-            name = ''
+            stream = name;
+            name = '';
         }
 
         // check if correct stream type
         if (!stream.pipe) {
-            return this.emit('error', new Error('stream must be readable or transform stream'))
+            return this.emit('error', new Error('stream must be readable or transform stream'));
         }
 
         // check if exist
@@ -81,32 +80,32 @@ export default class XLSXWriteStream extends events {
         }
 
         // sheet counts to name sheet{count}.xml
-        this.sheetCount++
+        this.sheetCount++;
         // default name
-        name = name || `sheet${this.sheetCount}`
+        name = name || `sheet${this.sheetCount}`;
 
         // write sheet name
-        this.sheetNameStream.write({ name, index: this.sheetCount })
+        this.sheetNameStream.write({ name, index: this.sheetCount });
         // write sheet relationship
-        this.sheetRelStream.write(this.sheetCount)
+        this.sheetRelStream.write(this.sheetCount);
 
         // new stream transform Array to xml string
-        let rowStream = new XLSXRowTransform();
+        const rowStream = new XLSXRowTransform();
 
         // if pass stream then pipe and later return `stream`
         if (stream) {
-            stream.pipe(rowStream)
+            stream.pipe(rowStream);
         } else {
-            stream = rowStream
+            stream = rowStream;
         }
 
         // sheet stream to add to `zip`
-        let sheetStream = new PassThrough();
+        const sheetStream = new PassThrough();
         // add sheet xml
-        let filename = `xl/worksheets/sheet${this.sheetCount}.xml`
+        const filename = `xl/worksheets/sheet${this.sheetCount}.xml`;
         this.zip.append(sheetStream, {
             name: filename,
-        }); 
+        });
 
         // pipe to sheet stream
         rowStream.pipe(sheetStream);
@@ -122,16 +121,18 @@ export default class XLSXWriteStream extends events {
         // when `end` emitted , try invoke `finalize`
         rowStream.on('end', () => {
             this.streamDone[name] = true;
-            this._finalize()
-        })
+            this._finalize();
+        });
 
         // proxy origin `end` function cause we need to add `footer` to sheet stream
-        let originEnd = sheetStream.end;
+        const originEnd = sheetStream.end;
 
         sheetStream.end = function endProxy(chunk) {
-            chunk && rowStream.write(chunk)
+            if (chunk) {
+                rowStream.write(chunk);
+            }
             originEnd.call(sheetStream, templates.SheetFooter);
-        }
+        };
 
         // return a stream that we can directly `write` data
         return stream;
@@ -159,16 +160,15 @@ export default class XLSXWriteStream extends events {
      */
     _finalize() {
         let flag = true;
-        let names = Object.keys(this.streamDone);
-        
+        const names = Object.keys(this.streamDone);
         names.forEach(name => {
             if (!this.streamDone[name]) {
                 flag = false;
             }
-        })
+        });
 
         if (!flag) {
-            return
+            return;
         }
 
         this.sheetNameStream.end(templates.SheetNameFooter);
