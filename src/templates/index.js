@@ -6,3 +6,7 @@ export { default as SheetHeader } from './sheet-header';
 export { default as Styles } from './styles';
 export { default as WorkbookRels } from './workbook-rels';
 export { default as Workbook } from './workbook';
+export { default as SheetNameFooter } from './workbook-footer';
+export { default as SheetNameHeader } from './workbook-header';
+export { default as SheetRelHeader } from './workbook-rels-header';
+export { default as SheetRelFooter } from './workbook-rels-footer';

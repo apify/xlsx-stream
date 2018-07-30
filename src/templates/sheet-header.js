@@ -9,5 +9,5 @@ export default `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     <sheetViews>
         <sheetView workbookViewId="0"/>
     </sheetViews>
-    <sheetFormatPr baseColWidth="30" defaultRowHeight="15" x14ac:dyDescent="0.25"/>
+    <sheetFormatPr baseColWidth="16.667" defaultRowHeight="15" x14ac:dyDescent="0.25"/>
     <sheetData>`;

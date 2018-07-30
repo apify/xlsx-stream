@@ -1,14 +1,20 @@
+# tools
+tools/unzip
+
+# xlsx in examples dir
+examples/*.xlsx
+
 # Logs
 logs
 *.log
-npm-debug.log*
+npm-debug.log
 yarn-debug.log*
 yarn-error.log*
 yarn.lock*
 
 # Runtime data
 pids
-*.pid
+*.pi
 *.seed
 *.pid.lock
 

@@ -1,6 +1,6 @@
 {
   "name": "xlsx-write-stream",
-  "version": "0.0.19",
+  "version": "0.1.0",
   "description": "XLSX stream writer",
   "main": "dist/index.js",
   "keywords": [
@@ -31,6 +31,8 @@
   ],
   "scripts": {
     "start": "npm run build && node dist/index.js",
+    "examples": "npm run build && node examples",
+    "unzip": "node tools/unzip",
     "build": "npm run clean && babel src --out-dir dist",
     "test": "npm run build && mocha --compilers js:babel-core/register --recursive",
     "test-cov": "npm run build && babel-node node_modules/isparta/bin/isparta cover --report html --report text node_modules/.bin/_mocha",
@@ -41,7 +43,8 @@
   },
   "dependencies": {
     "archiver": "^2.1.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "through2": "^2.0.3"
   },
   "devDependencies": {
     "apify-jsdoc-template": "github:apifytech/apify-jsdoc-template",
@@ -60,6 +63,7 @@
     "isparta": "^4.0.0",
     "mocha": "^4.0.1",
     "sinon": "^4.0.1",
-    "sinon-stub-promise": "^4.0.0"
+    "sinon-stub-promise": "^4.0.0",
+    "unzip": "^0.1.11"
   }
 }
