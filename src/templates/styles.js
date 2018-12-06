@@ -5,6 +5,9 @@ export default `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     mc:Ignorable="x14ac"
     xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"
 >
+      <numFmts count="1"> 
+        <numFmt numFmtId="170" formatCode="yyyy-mm-dd hh:mm:ss" /> 
+    </numFmts> 
     <fonts count="1" x14ac:knownFonts="1">
             <font>
                 <sz val="11"/>
@@ -34,9 +37,14 @@ export default `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
         <cellStyleXfs count="1">
             <xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>
         </cellStyleXfs>
-        <cellXfs count="1">
+        <cellXfs count="7">
             <xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>
-            <xf numFmtId="14" fontId="0" fillId="0" borderId="0" xfId="0"/>
+            <xf numFmtId="1" fontId="0" fillId="0" borderId="0" xfId="0"/>
+            <xf numFmtId="2" fontId="0" fillId="0" borderId="0" xfId="0"/>
+            <xf numFmtId="3" fontId="0" fillId="0" borderId="0" xfId="0"/>
+            <xf numFmtId="4" fontId="0" fillId="0" borderId="0" xfId="0"/>
+            <xf numFmtId="11" fontId="0" fillId="0" borderId="0" xfId="0"/>
+            <xf numFmtId="170" fontId="0" fillId="0" borderId="0" xfId="0"/>
         </cellXfs>
         <cellStyles count="1">
             <cellStyle name="Normal" xfId="0" builtinId="0"/>
