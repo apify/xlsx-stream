@@ -7,8 +7,11 @@ import XLSXRowTransform from './XLSXRowTransform';
 export default class XLSXWriteStream {
     /**
      * Create new Stream
+     * @param options {Object}
+     * @param options.shouldFormat {Boolean} - If set to true writer is formatting cells with numbers and dates
      */
-    constructor() {
+    constructor(options = {}) {
+        this.options = options;
         this.zip = Archiver('zip', {
             forceUTC: true,
         });
@@ -46,7 +49,7 @@ export default class XLSXWriteStream {
     }
 
     setInputStream(stream) {
-        const toXlsxRow = new XLSXRowTransform();
+        const toXlsxRow = new XLSXRowTransform(this.options.shouldFormat);
         const transformedStream = stream.pipe(toXlsxRow);
         this.sheetStream = new PassThrough();
         this.sheetStream.write(templates.SheetHeader);
