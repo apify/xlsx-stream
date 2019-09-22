@@ -12,6 +12,8 @@ export default class XLSXRowTransform extends Transform {
      * Transform array to row string
      */
     _transform(row, encoding, callback) { // eslint-disable-line
+        if (!Array.isArray(row)) return callback();
+
         const xlsxRow = Row(this.rowCount, row, this.shouldFormat);
         this.rowCount++;
         callback(null, xlsxRow);
