@@ -5,13 +5,15 @@ export default function (value, cell, shouldFormat) {
     if (isDate(value)) {
         const unixTimestamp = value.getTime();
         const officeTimestamp = (unixTimestamp / 86400000) + 25569;
-        return `<c r="${cell}" t="n" s="${shouldFormat && getDateFormat()}"><v>${officeTimestamp}</v></c>`;
+        const maybeFormat = shouldFormat && getDateFormat();
+        return `<c r="${cell}" t="n"${maybeFormat ? ` s="${maybeFormat}"` : ''}><v>${officeTimestamp}</v></c>`;
     } else if (isString(value)) {
         return `<c r="${cell}" t="inlineStr"><is><t>${sanitize(value)}</t></is></c>`;
     } else if (isBoolean(value)) {
         return `<c r="${cell}" t="inlineStr"><is><t>${value}</t></is></c>`;
     } else if (isNumber(value)) {
-        return `<c r="${cell}" t="n" s="${shouldFormat && getNumberFormat(value)}"><v>${value}</v></c>`;
+        const maybeFormat = shouldFormat && getNumberFormat(value);
+        return `<c r="${cell}" t="n"${maybeFormat ? ` s="${maybeFormat}"` : ''}><v>${value}</v></c>`;
     } else if (value) {
         return `<c r="${cell}" t="inlineStr"><is><t>${sanitize(`${value}`)}</t></is></c>`;
     }
