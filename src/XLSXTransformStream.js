@@ -28,7 +28,6 @@ export default class XLSXTransformStream extends Transform {
 
         this.zip.on('data', (data) => {
             this.push(data);
-            console.log('zip data', data);
         });
 
         this.zip.catchEarlyExitAttached = true;
