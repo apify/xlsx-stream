@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/apify/xlsx-stream.svg?branch=master)](https://travis-ci.org/apify/xlsx-stream) [![npm version](https://badge.fury.io/js/xlsx-write-stream.svg)](http://badge.fury.io/js/xlsx-write-stream)
 
 XLSX Write Stream is a streaming writer for XLSX spreadsheets. Its purpose is to replace CSV for large exports, because using
-CSV in Excel is very buggy and error prone. It's very efficient and can quickly write hundreds of thousands of rows with
+CSV in Excel is very buggy and error-prone. It's very efficient and can quickly write hundreds of thousands of rows with
 low memory usage.
 
 XLSX Write Stream does not support formatting, charts, comments and a myriad of
@@ -18,22 +18,13 @@ npm i 'xlsx-write-stream'
 ## Example Usage
 
 ```node
-import XLSXWriteStream from 'xlsx-write-stream';
+import XLSXTransformStream from 'xlsx-write-stream';
 
-
-// Initialize the writer
-const xlsxWriter = new XLSXWriteStream();
-
-// Set input stream. Input stream needs to implement Stream.Readable interface
+// Input stream needs to implement Stream.Readable interface
 // and each chunk should be an array of values (only string, date and number are supported value types)
-xlsxWriter.setInputStream(inputStream);
-
-// Get output stream. This will return a stream of XLSX file data.
-const xlsxStream = xlsxWriter.getOutputStream();
-
-// do something with the output, like write it into file or send it as HTTP response
-const writeStream = fs.createWriteStream('file.xlsx');
-xlsxStream.pipe(writeStream);
+inputStream
+    .pipe(new XLSXTransformStream()) // This stream transforms the input into a xlsx format
+    .pipe(fs.createWriteStream('file.xlsx')); // We need to store the result somewhere
 ```
 
 ## License
