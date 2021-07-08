@@ -41,8 +41,7 @@
     },
     "dependencies": {
         "archiver": "^5.3.0",
-        "lodash": "^4.17.4",
-        "unzipper": "^0.10.11"
+        "lodash": "^4.17.4"
     },
     "devDependencies": {
         "apify-jsdoc-template": "github:apifytech/apify-jsdoc-template",
@@ -61,6 +60,7 @@
         "isparta": "^4.0.0",
         "mocha": "^8.3.2",
         "sinon": "^4.0.1",
-        "sinon-stub-promise": "^4.0.0"
+        "sinon-stub-promise": "^4.0.0",
+        "unzipper": "^0.10.11"
     }
 }
