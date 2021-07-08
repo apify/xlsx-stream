@@ -6,8 +6,8 @@ const describeTestByType = (type) => `Returns correct Cell representation for ${
 
 describe('The Cell function', () => {
     it(describeTestByType('Date'), () => {
-        const expectedResult = '<c r="A1" t="n"><v>36525.958333333336</v></c>';
-        const result = Cell(new Date('2000-01-01T00:00:00'), getCellId(0, 0));
+        const expectedResult = '<c r="A1" t="n"><v>36526</v></c>';
+        const result = Cell(new Date('2000-01-01T00:00:00+00:00'), getCellId(0, 0));
         expect(result).to.be.equal(expectedResult);
     });
 
