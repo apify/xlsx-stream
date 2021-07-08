@@ -6,7 +6,7 @@
     "keywords": [
         "apify",
         "apifier",
-        "xslx",
+        "xlsx",
         "stream"
     ],
     "author": {
@@ -20,12 +20,12 @@
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/apifytech/xlsx-stream"
+        "url": "git+https://github.com/apify/xlsx-stream"
     },
     "bugs": {
-        "url": "https://github.com/apifytech/xlsx-stream"
+        "url": "https://github.com/apify/xlsx-stream"
     },
-    "homepage": "https://github.com/apifytech/xlsx-stream",
+    "homepage": "https://github.com/apify/xlsx-stream",
     "files": [
         "dist"
     ],
@@ -44,7 +44,7 @@
         "lodash": "^4.17.4"
     },
     "devDependencies": {
-        "apify-jsdoc-template": "github:apifytech/apify-jsdoc-template",
+        "apify-jsdoc-template": "github:apify/apify-jsdoc-template",
         "babel-cli": "^6.18.0",
         "babel-core": "^6.26.0",
         "babel-eslint": "^8.0.1",
