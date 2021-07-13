@@ -37,3 +37,18 @@ export function timeoutPromised(timeout) {
         setTimeout(resolve, timeout);
     });
 }
+
+export function getNumberFormat(n) {
+    const number = Math.abs(n);
+    if (number.toString().length >= 11) {
+        return 5;
+    }
+    if (number % 1 === 0) {
+        return number >= 1000 ? 3 : 1;
+    }
+    return number >= 1000 ? 4 : 2;
+}
+
+export function getDateFormat() {
+    return 6;
+}
