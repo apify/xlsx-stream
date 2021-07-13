@@ -1,4 +1,4 @@
-0.1.0 / 2021-07-13
+1.0.0 / 2021-07-13
 ==================
 - **BREAKING:** New API consistent with Node's Transform stream API. See README.md for new API usage.
 - Updated packages: archiver, mocha
