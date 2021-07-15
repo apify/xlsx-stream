@@ -1,20 +1,38 @@
 import Archiver from 'archiver';
-import { PassThrough } from 'stream';
-import * as templates from './templates';
+import { PassThrough, Transform } from 'stream';
 import XLSXRowTransform from './XLSXRowTransform';
+import * as templates from './templates';
 
-/** Class representing a XLSX Write Stream. */
-export default class XLSXWriteStream {
+/** Class representing a XLSX Transform Stream */
+export default class XLSXTransformStream extends Transform {
     /**
-     * Create new Stream
+     * Create a new Stream
      * @param options {Object}
      * @param options.shouldFormat {Boolean} - If set to true writer is formatting cells with numbers and dates
      */
     constructor(options = {}) {
+        super({ objectMode: true });
         this.options = options;
+        this.initializeArchiver();
+        this.rowTransform = new XLSXRowTransform(this.options.shouldFormat);
+
+        this.sheetStream = new PassThrough();
+        this.sheetStream.write(templates.SheetHeader);
+        this.rowTransform.pipe(this.sheetStream);
+        this.zip.append(this.sheetStream, {
+            name: 'xl/worksheets/sheet1.xml',
+        });
+    }
+
+    initializeArchiver() {
         this.zip = Archiver('zip', {
             forceUTC: true,
         });
+
+        this.zip.on('data', (data) => {
+            this.push(data);
+        });
+
         this.zip.catchEarlyExitAttached = true;
 
         this.zip.append(templates.ContentTypes, {
@@ -44,31 +62,16 @@ export default class XLSXWriteStream {
         this.zip.on('error', (err) => {
             console.error(err);
         });
-
-        this.finalize = this.finalize.bind(this);
     }
 
-    setInputStream(stream) {
-        const toXlsxRow = new XLSXRowTransform(this.options.shouldFormat);
-        const transformedStream = stream.pipe(toXlsxRow);
-        this.sheetStream = new PassThrough();
-        this.sheetStream.write(templates.SheetHeader);
-        transformedStream.on('end', this.finalize);
-        // stream.on('data', () => console.log('Input stream data'));
-        transformedStream.pipe(this.sheetStream);
-        this.zip.append(this.sheetStream, {
-            name: 'xl/worksheets/sheet1.xml',
-        });
+    _transform(row, encoding, callback) {
+        this.rowTransform.write(row);
+        callback();
     }
 
-    getOutputStream() {
-        return this.zip;
-    }
-    /**
-     * Finalize the zip archive
-     */
-    finalize() {
+    async _flush(callback) {
         this.sheetStream.end(templates.SheetFooter);
-        return this.zip.finalize();
+        await this.zip.finalize();
+        callback();
     }
 }

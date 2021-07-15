@@ -1,1 +1,1 @@
-module.exports = require('./XLSXWriteStream.js').default;
+module.exports = require('./XLSXTransformStream').default;

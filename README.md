@@ -18,22 +18,13 @@ npm i 'xlsx-write-stream'
 ## Example Usage
 
 ```node
-import XLSXWriteStream from 'xlsx-write-stream';
+import XLSXTransformStream from 'xlsx-write-stream';
 
-
-// Initialize the writer
-const xlsxWriter = new XLSXWriteStream();
-
-// Set input stream. Input stream needs to implement Stream.Readable interface
+// Input stream needs to implement Stream.Readable interface
 // and each chunk should be an array of values (only string, date and number are supported value types)
-xlsxWriter.setInputStream(inputStream);
-
-// Get output stream. This will return a stream of XLSX file data.
-const xlsxStream = xlsxWriter.getOutputStream();
-
-// do something with the output, like write it into file or send it as HTTP response
-const writeStream = fs.createWriteStream('file.xlsx');
-xlsxStream.pipe(writeStream);
+inputStream
+    .pipe(new XLSXTransformStream()) // This stream transforms the input into a xlsx format
+    .pipe(fs.createWriteStream('file.xlsx')); // We need to store the result somewhere
 ```
 
 ## License
