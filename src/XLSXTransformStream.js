@@ -1,5 +1,5 @@
 import Archiver from 'archiver';
-import { PassThrough, Transform } from 'stream';
+import { Transform } from 'stream';
 import XLSXRowTransform from './XLSXRowTransform';
 import * as templates from './templates';
 
@@ -16,10 +16,7 @@ export default class XLSXTransformStream extends Transform {
         this.initializeArchiver();
         this.rowTransform = new XLSXRowTransform(this.options.shouldFormat);
 
-        this.sheetStream = new PassThrough();
-        this.sheetStream.write(templates.SheetHeader);
-        this.rowTransform.pipe(this.sheetStream);
-        this.zip.append(this.sheetStream, {
+        this.zip.append(this.rowTransform, {
             name: 'xl/worksheets/sheet1.xml',
         });
     }
@@ -65,13 +62,15 @@ export default class XLSXTransformStream extends Transform {
     }
 
     _transform(row, encoding, callback) {
-        this.rowTransform.write(row);
-        callback();
+        if (this.rowTransform.write(row)) {
+            process.nextTick(callback);
+        } else {
+            this.rowTransform.once('drain', callback);
+        }
     }
 
-    async _flush(callback) {
-        this.sheetStream.end(templates.SheetFooter);
-        await this.zip.finalize();
-        callback();
+    _flush(callback) {
+        this.rowTransform.end();
+        this.zip.finalize().then(callback);
     }
 }
