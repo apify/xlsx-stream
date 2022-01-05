@@ -1,12 +1,8 @@
 {
+    "extends": "@apify/tsconfig",
     "compilerOptions": {
-        "module": "commonjs",
-        "allowSyntheticDefaultImports": true,
-        "esModuleInterop": true,
         "allowJs": true,
-        "declaration": true,
         "outDir": "dist",
-        "target": "ES2018",
     },
     "exclude": [
         "node_modules",
