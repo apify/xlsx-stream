@@ -3,6 +3,7 @@
     "version": "1.0.0",
     "description": "XLSX stream writer",
     "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
     "keywords": [
         "apify",
         "apifier",
@@ -31,11 +32,11 @@
     ],
     "scripts": {
         "start": "npm run build && node dist/index.js",
-        "build": "npm run clean && babel src --out-dir dist",
+        "build": "npm run clean && tsc",
         "test": "npm run build && mocha --require babel-core/register --recursive",
         "test-cov": "npm run build && babel-node node_modules/isparta/bin/isparta cover --report html --report text node_modules/.bin/_mocha",
         "prepare": "npm run build",
-        "clean": "rm -rf dist",
+        "clean": "rimraf dist",
         "lint": "eslint src test"
     },
     "dependencies": {
@@ -43,6 +44,10 @@
         "lodash": "^4.17.4"
     },
     "devDependencies": {
+        "@apify/tsconfig": "^0.1.0",
+        "rimraf": "^3.0.2",
+        "glob": "^7.2.0",
+        "typescript": "^4.5.4",
         "apify-jsdoc-template": "github:apify/apify-jsdoc-template",
         "babel-cli": "^6.18.0",
         "babel-core": "^6.26.0",
