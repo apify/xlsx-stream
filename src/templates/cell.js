@@ -8,6 +8,9 @@ const OFFSET_DAYS = 25569;
 const MILLISECONDS_IN_ONE_DAY = 86400000;
 
 export default function (value, cell, shouldFormat) {
+    if(cell.length==2 && cell[1]=='1'){
+        return `<c r="${cell}" s="7" t="inlineStr"><is><t>${(0, _utils.sanitize)(value)}</t></is></c>`;
+    }
     if (isDate(value)) {
         const unixTimestamp = value.getTime();
         const officeTimestamp = (unixTimestamp / MILLISECONDS_IN_ONE_DAY) + OFFSET_DAYS;

@@ -8,8 +8,16 @@ export default `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
       <numFmts count="1"> 
         <numFmt numFmtId="170" formatCode="yyyy-mm-dd hh:mm:ss" /> 
     </numFmts> 
-    <fonts count="1" x14ac:knownFonts="1">
+    <fonts count="2" x14ac:knownFonts="1">
             <font>
+                <sz val="11"/>
+                <color theme="1"/>
+                <name val="Calibri"/>
+                <family val="2"/>
+                <scheme val="minor"/>
+            </font>
+            <font>
+                <b/>
                 <sz val="11"/>
                 <color theme="1"/>
                 <name val="Calibri"/>
@@ -36,8 +44,9 @@ export default `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
         </borders>
         <cellStyleXfs count="1">
             <xf numFmtId="0" fontId="0" fillId="0" borderId="0"/>
+            <xf numFmtId="0" fontId="1" fillId="0" borderId="0"/>
         </cellStyleXfs>
-        <cellXfs count="7">
+        <cellXfs count="8">
             <xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>
             <xf numFmtId="1" fontId="0" fillId="0" borderId="0" xfId="0"/>
             <xf numFmtId="2" fontId="0" fillId="0" borderId="0" xfId="0"/>
@@ -45,6 +54,7 @@ export default `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
             <xf numFmtId="4" fontId="0" fillId="0" borderId="0" xfId="0"/>
             <xf numFmtId="11" fontId="0" fillId="0" borderId="0" xfId="0"/>
             <xf numFmtId="170" fontId="0" fillId="0" borderId="0" xfId="0"/>
+            <xf numFmtId="7" fontId="1" fillId="0" borderId="0" xfId="1"/>
         </cellXfs>
         <cellStyles count="1">
             <cellStyle name="Normal" xfId="0" builtinId="0"/>
