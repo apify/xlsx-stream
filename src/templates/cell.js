@@ -7,9 +7,9 @@ const OFFSET_DAYS = 25569;
 // 24 * 60 * 60 * 1000
 const MILLISECONDS_IN_ONE_DAY = 86400000;
 
-export default function (value, cell, shouldFormat) {
-    if(cell.length==2 && cell[1]=='1'){
-        return `<c r="${cell}" s="7" t="inlineStr"><is><t>${(0, _utils.sanitize)(value)}</t></is></c>`;
+export default function (value, cell, shouldFormat, index) {
+    if(index==0){
+        return `<c r="${cell}" s="7" t="inlineStr"><is><t>${(0, sanitize)(value)}</t></is></c>`;
     }
     if (isDate(value)) {
         const unixTimestamp = value.getTime();
