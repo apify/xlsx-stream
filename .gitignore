@@ -65,3 +65,5 @@ typings/
 generated.xlsx
 .idea
 package-lock.json
+.vscode
+.DS_Store
