@@ -19,29 +19,29 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [10, 12, 14]
+        node-version: [16, 18, 20]
 
     steps:
       -
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       -
         name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       -
         name: Cache Node Modules
-        if: ${{ matrix.node-version == 14 }}
-        uses: actions/cache@v2
+        if: ${{ matrix.node-version == 20 }}
+        uses: actions/cache@v4
         with:
           path: |
             node_modules
             build
-          key: cache-${{ github.run_id }}-v14
+          key: cache-${{ github.run_id }}-v20
       -
         name: Install Dependencies
         run: npm install
-      -   
+      -
           name: Add localhost-test to Linux hosts file
           if: ${{ matrix.os == 'ubuntu-latest' }}
           run: sudo echo "127.0.0.1 localhost-test" | sudo tee -a /etc/hosts
@@ -56,20 +56,20 @@ jobs:
 
     steps:
       -
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       -
-        name: Use Node.js 14
-        uses: actions/setup-node@v1
+        name: Use Node.js 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 14
+          node-version: 20
       -
         name: Load Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             node_modules
             build
-          key: cache-${{ github.run_id }}-v14
+          key: cache-${{ github.run_id }}-v20
       -
         run: npm run lint
 
@@ -82,20 +82,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       -
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 14
+          node-version: 20
           registry-url: https://registry.npmjs.org/
       -
         name: Load Cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: |
             node_modules
             build
-          key: cache-${{ github.run_id }}-v14
+          key: cache-${{ github.run_id }}-v20
       -
         # Determine if this is a beta or latest release
         name: Set Release Tag
