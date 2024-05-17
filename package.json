@@ -1,6 +1,6 @@
 {
     "name": "xlsx-write-stream",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "XLSX stream writer",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
@@ -44,9 +44,7 @@
     },
     "devDependencies": {
         "@apify/tsconfig": "^0.1.0",
-        "rimraf": "^3.0.2",
-        "glob": "^7.2.0",
-        "typescript": "^4.5.4",
+        "@types/node": "^18.15.3",
         "apify-jsdoc-template": "github:apify/apify-jsdoc-template",
         "babel-cli": "^6.18.0",
         "babel-core": "^6.26.0",
@@ -60,10 +58,13 @@
         "eslint-plugin-mocha": "^4.11.0",
         "eslint-plugin-promise": "^3.6.0",
         "eslint-plugin-react": "7.4.0",
+        "glob": "^7.2.0",
         "isparta": "^4.0.0",
         "mocha": "^8.3.2",
+        "rimraf": "^3.0.2",
         "sinon": "^4.0.1",
         "sinon-stub-promise": "^4.0.0",
+        "typescript": "^5.4.5",
         "unzipper": "^0.10.11"
     }
 }
