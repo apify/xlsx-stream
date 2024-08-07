@@ -1,3 +1,11 @@
+1.0.3 / 2024-08-07
+==================
+- Add `tslib` to dependencies
+
+1.0.2 / 2024-05-18
+==================
+- Add `@types/node` to devDependencies to fix `.d.ts` files build
+
 1.0.1 / 2024-05-13
 ==================
 - Remove lodash dependency
