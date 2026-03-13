@@ -27,7 +27,9 @@ export default class XLSXTransformStream extends Transform {
         });
 
         this.zip.on('data', (data) => {
-            this.push(data);
+            if (!this.push(data)) {
+                this.zip.pause();
+            }
         });
 
         this.zip.catchEarlyExitAttached = true;
@@ -72,5 +74,13 @@ export default class XLSXTransformStream extends Transform {
     _flush(callback) {
         this.rowTransform.end();
         this.zip.finalize().then(callback);
+    }
+
+    // _read on a Transform stream is called when there's not enough data in the internal buffer
+    // on the readable size (the buffer we fill with this.push()). So when this is called, we can allow
+    // the zip stream to produce more data.
+    _read(size) {
+        this.zip.resume();
+        super._read(size);
     }
 }
