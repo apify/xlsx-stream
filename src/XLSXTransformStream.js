@@ -65,7 +65,7 @@ export default class XLSXTransformStream extends Transform {
 
     _transform(row, encoding, callback) {
         if (this.rowTransform.write(row)) {
-            process.nextTick(callback);
+            callback();
         } else {
             this.rowTransform.once('drain', callback);
         }
