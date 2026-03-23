@@ -15,6 +15,7 @@ export default class XLSXTransformStream extends Transform {
         this.options = options;
         this.initializeArchiver();
         this.rowTransform = new XLSXRowTransform(this.options.shouldFormat);
+        this.flushing = false;
 
         this.zip.append(this.rowTransform, {
             name: 'xl/worksheets/sheet1.xml',
@@ -27,7 +28,9 @@ export default class XLSXTransformStream extends Transform {
         });
 
         this.zip.on('data', (data) => {
-            if (!this.push(data)) {
+            // If push signals that internal buffer is full, pause the zip stream (backpressure).
+            // However, do not pause anymore if all rows were processed and we are just flushing the remaining data.
+            if (!this.push(data) && !this.flushing) {
                 this.zip.pause();
             }
         });
@@ -72,6 +75,9 @@ export default class XLSXTransformStream extends Transform {
     }
 
     _flush(callback) {
+        this.flushing = true;
+        this.zip.resume();
+
         this.rowTransform.end();
         this.zip.finalize().then(callback);
     }
