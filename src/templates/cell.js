@@ -12,14 +12,18 @@ export default function (value, cell, shouldFormat) {
         const officeTimestamp = (unixTimestamp / MILLISECONDS_IN_ONE_DAY) + OFFSET_DAYS;
         const maybeFormat = shouldFormat && getDateFormat();
         return `<c r="${cell}" t="n"${maybeFormat ? ` s="${maybeFormat}"` : ''}><v>${officeTimestamp}</v></c>`;
-    } else if (typeof value === 'string') {
+    }
+    if (typeof value === 'string') {
         return `<c r="${cell}" t="inlineStr"><is><t>${sanitize(value)}</t></is></c>`;
-    } else if (typeof value === 'boolean') {
+    }
+    if (typeof value === 'boolean') {
         return `<c r="${cell}" t="inlineStr"><is><t>${value}</t></is></c>`;
-    } else if (typeof value === 'number') {
+    }
+    if (typeof value === 'number') {
         const maybeFormat = shouldFormat && getNumberFormat(value);
         return `<c r="${cell}" t="n"${maybeFormat ? ` s="${maybeFormat}"` : ''}><v>${value}</v></c>`;
-    } else if (value) {
+    }
+    if (value) {
         return `<c r="${cell}" t="inlineStr"><is><t>${sanitize(`${value}`)}</t></is></c>`;
     }
     return '';
