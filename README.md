@@ -27,6 +27,40 @@ inputStream
     .pipe(fs.createWriteStream('file.xlsx')); // We need to store the result somewhere
 ```
 
+## Internals documentation
+
+A .xlsx file is essentialy a ZIP archive with some well defined format. So the main class (`XLSXTransformStream`) creates a ZIP file, adds a few static files that don't change based on the content, and then adds a streaming `sheet1.xml` entry, into which the transformed content is written. The streamed output of the ZIP archive is then forwarded as the output of the XLSXTransformStream.
+
+Image is worth a thousand words:
+
+```
+                      [ * ] (Start)
+                        |
+                        | Dataset rows
+                        v
+                +---------------------------+      Output bytes
+                |    XLSXTransformStream    |----------------------> [*] (End)
+                +---------------------------+
+                  |               |      ^
+     Dataset rows |         Other |      | ZIP.on("data", (bytes)
+                  |         files |      |   => this.push(bytes))
+                  v               v      |
+        +------------------+  +------------------+
+        | XLSXRowTransform |  |                  |
+        +------------------+  |                  |
+                  |           |                  |
+             Text |           |     ZIP file     |
+                  v           |                  |
+        +------------------+  |                  |
+        |   sheet1.xml     |  |                  |
+        |   ZIP entry      |  |                  |
+        +------------------+  +------------------+
+                  |                   ^
+                  |   Is included in  |
+                  +-------------------+
+```
+
+
 ## License
 
 This package is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
