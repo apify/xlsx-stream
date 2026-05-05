@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { Readable } from 'stream';
+import { Readable, Writable } from 'stream';
 import fs from 'fs';
 import path from 'path';
 import unzipper from 'unzipper';
@@ -36,5 +36,31 @@ describe('The XLSXTransformStream', () => {
         Object.keys(testFiles).map((key) => {
             expect(snapshotFiles[key] && testFiles[key].equals(snapshotFiles[key])).to.be.equal(true);
         });
+    });
+
+    it('Properly applies backpressure', async function () {
+        // in reality, this takes 2.5s. If the backpressure is not applied, it will take longer, but still should fit into this timeout
+        this.timeout(8000);
+
+        const stuckDestination = new Writable({
+            // eslint-disable-next-line no-unused-vars
+            write(_chunk, _encoding, _callback) {
+                // never call the callback, so the stream is stuck
+            },
+        });
+        const transformStream = new XLSXTransformStream();
+        transformStream.pipe(stuckDestination);
+
+        const LIMIT = 600; // the backpressure is applied after around 376 rows - let's have some margin
+        let i = 0;
+        for (; i < LIMIT; i++) {
+            const canWrite = transformStream.write(Array.from({ length: 1000 }, () => `${Math.random()}`));
+            if (!canWrite) break; // backpressure was applied
+
+            // add some delay between writes, so the data can flow through all the intermediate streams and ZIP compression
+            // eslint-disable-next-line no-await-in-loop
+            await new Promise((resolve) => setTimeout(resolve, 5));
+        }
+        expect(i).to.be.lessThan(LIMIT); // expect that backpressure was applied before writing all ${LIMIT} rows
     });
 });
