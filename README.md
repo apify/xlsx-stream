@@ -29,9 +29,9 @@ inputStream
 
 ## Internals documentation
 
-A .xlsx file is essentialy a ZIP archive with some well defined format. So the main class (`XLSXTransformStream`) creates a ZIP file, adds a few static files that don't change based on the content, and then adds a streaming `sheet1.xml` entry, into which the transformed content is written. The streamed output of the ZIP archive is then forwarded as the output of the XLSXTransformStream.
+A `.xlsx` file is a ZIP archive with a standardized structure. The main class (`XLSXTransformStream`) creates this archive by first adding a few static metadata files, and then streams the actual content of the sheet into a `sheet1.xml` entry. The resulting ZIP stream becomes the output of XLSXTransformStream.
 
-Image is worth a thousand words:
+See the diagram below for a visual overview:
 
 ```
                       [ * ] (Start)
