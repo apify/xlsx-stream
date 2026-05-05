@@ -59,7 +59,7 @@ describe('The XLSXTransformStream', () => {
 
             // add some delay between writes, so the data can flow through all the intermediate streams and ZIP compression
             // eslint-disable-next-line no-await-in-loop
-            await new Promise((resolve) => setTimeout(resolve, 5));
+            await new Promise((resolve) => { setTimeout(resolve, 5); });
         }
         expect(i).to.be.lessThan(LIMIT); // expect that backpressure was applied before writing all ${LIMIT} rows
     });
