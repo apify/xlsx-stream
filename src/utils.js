@@ -20,11 +20,11 @@ export function sanitize(text) {
     for (let i = 0; i < escaped.length; i++) {
         letter = escaped[i];
         if (
-            (letter === '\x09') ||
-            (letter === '\x0A') ||
-            (letter === '\x0D') ||
-            ((letter >= '\x20') && (letter <= '\uD7FF')) ||
-            ((letter >= '\uE000') && (letter <= '\uFFFD'))
+            (letter === '\x09')
+            || (letter === '\x0A')
+            || (letter === '\x0D')
+            || ((letter >= '\x20') && (letter <= '\uD7FF'))
+            || ((letter >= '\uE000') && (letter <= '\uFFFD'))
         ) {
             writtenLength += buffer.write(letter, writtenLength);
         }

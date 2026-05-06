@@ -19,8 +19,9 @@ describe('The XLSXRowTransform', () => {
         outputStream.on('data', (chunk) => {
             chunks.push(chunk);
         });
-        const streamResult = new Promise((resolve) =>
-            outputStream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8'))));
+        const streamResult = new Promise((resolve) => {
+            outputStream.on('end', () => resolve(Buffer.concat(chunks).toString('utf8')));
+        });
 
         inputStream
             .pipe(transform)
