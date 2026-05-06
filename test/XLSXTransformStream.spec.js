@@ -112,8 +112,7 @@ describe('The XLSXTransformStream', () => {
         await new Promise(resolve => { setTimeout(resolve, 10); });
         const readsUntilEnd2 = await readUntilEnd(outputStream);
 
-
-        console.log('Backpressure test stats:')
+        console.log('Backpressure test stats:');
         console.log(`${writesUntilBackpressure1} writes; ${readsUntilDrain1} B read until drain`);
         console.log(`${writesUntilBackpressure2} writes; ${readsUntilDrain2} B read until drain`);
         console.log(`${readsUntilEnd1} B read until end; transform input closed; ${readsUntilEnd2} B read until end.`);
