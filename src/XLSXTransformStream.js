@@ -70,6 +70,8 @@ export default class XLSXTransformStream extends Transform {
         if (this.rowTransform.write(row)) {
             callback();
         } else {
+            // Write returned false, meaning the buffer in rowTransform is full. Let's resolve the callback
+            // (and let Transform call `_transform` with the next chunk) only when the rowTransform is ready for more data.
             this.rowTransform.once('drain', callback);
         }
     }
@@ -79,12 +81,16 @@ export default class XLSXTransformStream extends Transform {
         this.zip.resume();
 
         this.rowTransform.end();
-        this.zip.finalize().then(callback);
+        this.zip.finalize()
+            .then(() => callback())
+            .catch((err) => callback(err));
     }
 
-    // _read on a Transform stream is called when there's not enough data in the internal buffer
-    // on the readable size (the buffer we fill with this.push()). So when this is called, we can allow
-    // the zip stream to produce more data.
+    // Transform stream has two internal buffers - one on the writable side (data waiting to be transformed), and one
+    // on the readable side (data produced by this.push(), waiting to be consumed by the user of this stream).
+    // `_read` is called when there's not enough data in the readable-side buffer. So when this is called, we can allow
+    // the zip stream to produce more data. We also need to call `super._read()`, because this method shouldn't be typically
+    // overriden in Transform streams, but there isn't a better way to do this - see https://github.com/nodejs/readable-stream/issues/111
     _read(size) {
         this.zip.resume();
         super._read(size);

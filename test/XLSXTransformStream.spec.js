@@ -43,27 +43,27 @@ describe('The XLSXTransformStream', () => {
         // it will take longer, but still should fit into this timeout.
         this.timeout(8000);
 
-        // an output stream that only accepts a single chunk (+ internal Node.js buffers),
-        // and then applies backpressure, without ever accepting more data
+        // An output stream that only accepts a single chunk (+ internal Node.js buffers),
+        // and then applies backpressure, without ever accepting more data.
         const stuckDestination = new Writable({
             // eslint-disable-next-line no-unused-vars
             write(_chunk, _encoding, _callback) {
-                // never call the callback
+                // Never call the callback.
             },
         });
         const transformStream = new XLSXTransformStream();
         transformStream.pipe(stuckDestination);
 
-        const LIMIT = 600; // the backpressure is applied after around 376 rows - let's have some margin
+        const LIMIT = 600; // The backpressure is applied after around 376 rows - let's have some margin.
         let i = 0;
         for (; i < LIMIT; i++) {
             const canWrite = transformStream.write(Array.from({ length: 1000 }, () => `${Math.random()}`));
-            if (!canWrite) break; // backpressure was applied
+            if (!canWrite) break; // Backpressure was applied.
 
             // Add some delay between writes, so the data can flow through all the intermediate streams and ZIP compression.
             // eslint-disable-next-line no-await-in-loop
             await new Promise((resolve) => { setTimeout(resolve, 5); });
         }
-        expect(i).to.be.lessThan(LIMIT); // expect that backpressure was applied before writing all ${LIMIT} rows
+        expect(i).to.be.lessThan(LIMIT); // Expect that backpressure was applied before writing all ${LIMIT} rows.
     });
 });
