@@ -1,3 +1,6 @@
+1.0.4 / 2026-05-07
+- Fix handling of backpressure in streams to prevent unlimited data buffering
+
 1.0.3 / 2024-08-07
 ==================
 - Add `tslib` to dependencies
