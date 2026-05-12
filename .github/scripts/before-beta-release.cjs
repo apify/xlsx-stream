@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const { execSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -11,7 +12,6 @@ const PACKAGE_NAME = pkgJson.name;
 const VERSION = pkgJson.version;
 
 const nextVersion = getNextVersion(VERSION);
-// eslint-disable-next-line no-console
 console.log(`before-deploy: Setting version to ${nextVersion}`);
 pkgJson.version = nextVersion;
 
@@ -22,7 +22,6 @@ function getNextVersion(version) {
     const versions = JSON.parse(versionString);
 
     if (versions.some((v) => v === VERSION)) {
-        // eslint-disable-next-line no-console
         console.error(`before-deploy: A release with version ${VERSION} already exists. Please increment version accordingly.`);
         process.exit(1);
     }
