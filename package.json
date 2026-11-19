@@ -34,8 +34,7 @@
     "scripts": {
         "start": "npm run build && node dist/index.js",
         "build": "npm run clean && tsc",
-        "test": "npm run build && mocha --require babel-core/register --recursive",
-        "test-cov": "npm run build && babel-node node_modules/isparta/bin/isparta cover --report html --report text node_modules/.bin/_mocha",
+        "test": "npm run build && mocha --import=tsx --recursive",
         "prepare": "npm run build",
         "clean": "rimraf dist",
         "lint": "eslint src test"
@@ -48,10 +47,6 @@
     "devDependencies": {
         "@apify/tsconfig": "^0.1.0",
         "@types/node": "^18.15.3",
-        "babel-cli": "^6.18.0",
-        "babel-core": "^6.26.0",
-        "babel-eslint": "^8.0.1",
-        "babel-preset-node8": "^1.2.0",
         "chai": "^4.1.2",
         "eslint": "^8.0.0",
         "eslint-config-airbnb-base": "^15.0.0",
@@ -59,11 +54,11 @@
         "eslint-plugin-mocha": "^10.0.0",
         "eslint-plugin-promise": "^7.2.1",
         "glob": "^7.2.0",
-        "isparta": "^4.0.0",
-        "mocha": "^8.3.2",
+        "mocha": "^12.0.3",
         "rimraf": "^3.0.2",
         "sinon": "^4.0.1",
         "sinon-stub-promise": "^4.0.0",
+        "tsx": "^4.23.15",
         "typescript": "^5.4.5",
         "unzipper": "^0.10.11"
     }

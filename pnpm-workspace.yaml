@@ -3,6 +3,7 @@
 # review them, then change to `true` or `false`. `: false` is an explicit-deny marker.
 allowBuilds:
   core-js: false # postinstall only prints a funding message
+  esbuild: false # binary ships via optional platform package; postinstall only verifies it
   sinon: false # postinstall only prints a funding message
 blockExoticSubdeps: true
 
