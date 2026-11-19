@@ -1,0 +1,31 @@
+{
+    "extends": [
+        "config:base", ":semanticCommitTypeAll(chore)",
+        // Pins actions to a commit SHA, with the tag kept as a comment.
+        "helpers:pinGitHubActionDigests"
+    ],
+    "pinVersions": false,
+    "separateMajorMinor": true,
+    "dependencyDashboard": false,
+    "semanticCommits": "enabled",
+    // Matches `minimumReleaseAge` in pnpm-workspace.yaml, otherwise pnpm rejects the proposed versions.
+    "minimumReleaseAge": "3 days",
+    "lockFileMaintenance": {
+        "enabled": true,
+        "schedule": [
+          "before 3am on Monday"
+        ],
+        "automerge": false
+    },
+    "packageRules": [
+        {
+            "matchPackagePatterns": [
+                "*"
+            ],
+            "groupName": "all dependencies",
+            "groupSlug": "all",
+            "automerge": false
+        }
+    ],
+    "schedule": ["before 3am on Monday"],
+}

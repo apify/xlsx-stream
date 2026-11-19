@@ -1,0 +1,13 @@
+# Postinstall protection — pnpm only runs build scripts for packages with `: true` here.
+# New transitives with build scripts surface as placeholders the first time they appear —
+# review them, then change to `true` or `false`. `: false` is an explicit-deny marker.
+allowBuilds:
+  core-js: false # postinstall only prints a funding message
+  esbuild: false # binary ships via optional platform package; postinstall only verifies it
+  sinon: false # postinstall only prints a funding message
+blockExoticSubdeps: true
+
+# Supply chain hardening
+minimumReleaseAge: 4320 # 3 days
+trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 43200 # 30 days
