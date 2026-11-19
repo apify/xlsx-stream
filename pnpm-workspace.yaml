@@ -8,6 +8,6 @@ allowBuilds:
 blockExoticSubdeps: true
 
 # Supply chain hardening
-minimumReleaseAge: 1440 # 24 hours
+minimumReleaseAge: 4320 # 3 days
 trustPolicy: no-downgrade
 trustPolicyIgnoreAfter: 43200 # 30 days

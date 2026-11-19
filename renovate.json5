@@ -9,7 +9,7 @@
     "dependencyDashboard": false,
     "semanticCommits": "enabled",
     // Matches `minimumReleaseAge` in pnpm-workspace.yaml, otherwise pnpm rejects the proposed versions.
-    "minimumReleaseAge": "1 day",
+    "minimumReleaseAge": "3 days",
     "lockFileMaintenance": {
         "enabled": true,
         "schedule": [
