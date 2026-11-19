@@ -4,6 +4,7 @@
     "description": "XLSX stream writer",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
+    "packageManager": "pnpm@11.0.8",
     "keywords": [
         "apify",
         "apifier",
@@ -46,7 +47,6 @@
     "devDependencies": {
         "@apify/tsconfig": "^0.1.0",
         "@types/node": "^18.15.3",
-        "apify-jsdoc-template": "github:apify/apify-jsdoc-template",
         "babel-cli": "^6.18.0",
         "babel-core": "^6.26.0",
         "babel-eslint": "^8.0.1",

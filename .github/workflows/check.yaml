@@ -14,24 +14,28 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20, 22, 24]
+        node-version: [22, 24, 26]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: ${{ matrix.node-version }}
+          cache: pnpm
 
       - name: Install Dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
       # Lint only on the latest Node.js version to save time.
       - name: Lint code
-        if: ${{ matrix.node-version == 24 }}
-        run: npm run lint
+        if: ${{ matrix.node-version == 26 }}
+        run: pnpm run lint
 
       - name: Run Tests
-        run: npm run test
+        run: pnpm run test

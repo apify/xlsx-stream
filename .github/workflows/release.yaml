@@ -9,10 +9,8 @@ on:
   release:
     types: [published]
 
-# Necessary permissions for publishing to NPM with OIDC
 permissions:
-  contents: write
-  id-token: write
+  contents: read
 
 jobs:
   lint_and_test:
@@ -23,18 +21,25 @@ jobs:
     name: Publish to NPM
     needs: [lint_and_test]
     runs-on: ubuntu-24.04
+    # Necessary permissions for publishing to NPM with OIDC and pushing the beta tag
+    permissions:
+      contents: write
+      id-token: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
 
-      - name: Use Node.js 24
+      - name: Set up pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+
+      - name: Use Node.js 26
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
-          node-version: 24
+          node-version: 26
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
       # Determine if this is a beta or latest release
       - name: Get release tag
