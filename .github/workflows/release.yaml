@@ -1,34 +1,54 @@
 name: Check & Release
 
 on:
-  # Push to master will deploy a beta version
+  # Push to master keeps the release-please PR up to date; merging that PR publishes to NPM
   push:
     branches:
       - master
-  # A release via GitHub releases will deploy a latest version
-  release:
-    types: [published]
 
 permissions:
   contents: read
 
 jobs:
+  # Keeps a release PR open (version bump + changelog based on conventional commits).
+  # Merging that PR creates the GitHub release and tag, and `release_created` becomes true.
+  release_please:
+    name: Release Please
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+      version: ${{ steps.release.outputs.version }}
+    steps:
+      - name: Run release-please
+        id: release
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
   lint_and_test:
     name: Lint and test
     uses: ./.github/workflows/check.yaml
 
   deploy:
     name: Publish to NPM
-    needs: [lint_and_test]
+    needs: [lint_and_test, release_please]
+    if: needs.release_please.outputs.release_created == 'true'
     runs-on: ubuntu-24.04
-    # Necessary permissions for publishing to NPM with OIDC and pushing the beta tag
+    # Necessary permissions for publishing to NPM with OIDC
     permissions:
-      contents: write
+      contents: read
       id-token: write
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          ref: ${{ needs.release_please.outputs.tag_name }}
 
       - name: Set up pnpm
         uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
@@ -41,23 +61,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Determine if this is a beta or latest release
-      - name: Get release tag
-        id: get_release_tag
-        run: echo "release_tag=$(if [ ${{ github.event_name }} = release ]; then echo latest; else echo beta; fi)" >> $GITHUB_OUTPUT
-
-      # Check version consistency and increment pre-release version number for beta only.
-      - name: Bump pre-release version
-        if: steps.get_release_tag.outputs.release_tag == 'beta'
-        run: node ./.github/scripts/before-beta-release.cjs
-
+      # Pre-release versions (e.g. 1.0.5-beta.1) go to the `beta` tag, the rest to `latest`.
       - name: Publish to NPM
-        run: npm publish --tag ${{ steps.get_release_tag.outputs.release_tag }}
-
-      # Latest version is tagged by the release process so we only tag beta here.
-      - name: Tag version
-        if: steps.get_release_tag.outputs.release_tag == 'beta'
-        run: |
-          git_tag=v`node -p "require('./package.json').version"`
-          git tag $git_tag
-          git push origin $git_tag
+        run: npm publish --tag ${{ contains(needs.release_please.outputs.version, '-') && 'beta' || 'latest' }}
